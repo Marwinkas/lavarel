@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('cost');
             $table->integer('amount');
         });
-        Schema::connection('sqlite')->create('products', function (Blueprint $table) {
+        Schema::connection('mysql')->create('products', function (Blueprint $table) {
             $table->id();
         });
     }
