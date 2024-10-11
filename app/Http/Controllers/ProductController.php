@@ -2,31 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductModel;
-use App\Models\BuyModel;
+use App\Models\Product;
+use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 class ProductController extends Controller
 {
-    public function show(): View
+    public function Show(): View
     {
         return view('ProductPage', [
-            'products' => ProductModel::orderBy('name')->get()
+            'products' => Product::orderBy('name')->get()
         ]);
     }
-        public function showCard(string $id): View
-        {
-        return view('Product', [
-            'product' => ProductModel::findOrFail($id)->where('id', $id)->get()
-        ]);
-    }
-    public function store(Request $request)
+    public function ShowProduct(string $id): View
     {
-        BuyModel::insert([
-            'name' => $request->name,
-            'amount' => $request->amount,
-            'cost' => $request->cost,]
-        );
-        return redirect('/')->with('status', '');
+        return view('Product', [
+            'product' => Product::findOrFail($id)->get()
+        ]);
+    }
+    public function Order(Request $request)
+    {
+        $valitated= $request->validate([
+            'id' => ['bail','required', 'numeric'],
+            'amount' => ['bail','required', 'numeric'],
+        ]);
+        if($valitated){
+
+            OrderProduct::insert(
+                [
+                    'idproduct' => $request->id,
+                    'cost' => (Product::findOrFail($request->id)->get()[0]->cost * $request->amount),
+                    'amount' => $request->amount,
+                ]
+            );
+            return redirect('/')->with('status', '');
+        }
+        return redirect('/dsdad')->with('status', '');
+
     }
 }
