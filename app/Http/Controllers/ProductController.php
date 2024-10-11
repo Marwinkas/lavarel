@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function ShowProduct(string $id): View
     {
         return view('Product', [
-            'product' => Product::findOrFail($id)->get()
+            'product' => Product::findOrFail($id)
         ]);
     }
     public function Order(Request $request)
@@ -31,13 +31,13 @@ class ProductController extends Controller
             OrderProduct::insert(
                 [
                     'idproduct' => $request->id,
-                    'cost' => (Product::findOrFail($request->id)->get()[0]->cost * $request->amount),
+                    'cost' => (Product::findOrFail($request->id)->cost * $request->amount),
                     'amount' => $request->amount,
                 ]
             );
             return redirect('/')->with('status', '');
         }
-        return redirect('/dsdad')->with('status', '');
+        return redirect('/')->with('status', '');
 
     }
 }
