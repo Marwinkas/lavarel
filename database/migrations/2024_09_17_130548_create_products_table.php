@@ -15,11 +15,8 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('cost');
             $table->integer('amount');
-        });
-        Schema::connection('mysql')->create('products', function (Blueprint $table) {
-            $table->id();
+            $table->integer('cost');
         });
     }
 
