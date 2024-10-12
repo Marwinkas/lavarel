@@ -6,12 +6,13 @@ use App\Models\Product;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     public function Show(): View
     {
         return view('ProductPage', [
-            'products' => Product::orderBy('name')->get()
+            'products' => Product::orderBy(column: 'name')->get()
         ]);
     }
     public function ShowProduct(string $id): View
@@ -30,9 +31,10 @@ class ProductController extends Controller
 
             OrderProduct::insert(
                 [
-                    'idproduct' => $request->id,
+                    'product_id' => $request->id,
                     'cost' => (Product::findOrFail($request->id)->cost * $request->amount),
                     'amount' => $request->amount,
+                    'user_id' => Auth::user()->getAuthIdentifier(),
                 ]
             );
             return redirect('/')->with('status', '');
