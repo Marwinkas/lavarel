@@ -7,15 +7,14 @@
                     <p>{{$product->name}}</p>
                 </div>
                 <div class='card-description'>
-                    <p>Цена товара:</p>
+                    <p>Цена:</p>
                     <p>{{$product->cost}}</p>
                 </div>
                 <div class='card-description'>
                     <p>Количество товара:</p>   
                     <p>{{$product->amount}}</p>
                 </div>
-                <a href={{"product/" . $product->id}} class='card-button'>Посмотреть: {{$product->name}}</a>
-
+            
             </div>
     @endforeach
 </div>
