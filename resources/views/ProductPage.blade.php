@@ -2,6 +2,7 @@
 <div class="cards">
     @foreach ($products as $product) 
             <div class='card-item'>
+            <a href="/profile"> Профиль</a>
                 <div class='card-description'> 
                     <p>Имя товара:</p>
                     <p>{{$product->name}}</p>

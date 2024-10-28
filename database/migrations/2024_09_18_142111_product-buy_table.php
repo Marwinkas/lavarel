@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('cost');
             $table->integer('amount');
             $table->integer(column: 'user_id');
+            $table->string(column: 'status');
+            $table->timestamps();
         });
     }
 

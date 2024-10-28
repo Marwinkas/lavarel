@@ -10,6 +10,7 @@ Route::get('/', [ProductController::class, 'Show']);
 Route::get('/profile', [ProfileController::class, 'Show'])->middleware('auth');
 Route::get('product/{id}', [ProductController::class, 'ShowProduct'])->middleware('auth');   
 Route::post('/', [ProductController::class, 'Order']);
+Route::post('/profile', [ProfileController::class, 'UpdateStatus'])->middleware('auth');   
 
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/registration', [RegisterController::class, 'authenticate']);
