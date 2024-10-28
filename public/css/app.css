@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 .auth{
     width: 500px;
@@ -60,6 +61,16 @@ p{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+}
+.product-item2{
+    background-color: white;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 .product-description{
     width: 100%;

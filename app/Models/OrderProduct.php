@@ -9,13 +9,23 @@ class OrderProduct extends Model
 {
     protected $table = 'product_buy';
     protected $primaryKey = 'id';
-
-    public $timestamps = false;
+    
     protected $connection = 'sqlite';
     protected $attributes = [
-        'options' => '[]',
-        'delayed' => false,
     ];
-    
+    protected $fillable = [
+        'product_id',
+
+        'cost',
+
+        'amount',
+        'user_id',
+
+        'status'
+    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id'); // Assuming `user_id` is the foreign key in the `product_buy` table
+    }
     use HasFactory;
 }

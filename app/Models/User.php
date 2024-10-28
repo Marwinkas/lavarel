@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'privilages'
     ];
 
     /**
@@ -37,6 +38,11 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    public function orderProduct()
+{
+            return $this->belongsTo(OrderProduct::class, 'order_product_id'); // Adjust the foreign key if necessary
+        }
+
     protected function casts(): array
     {
         return [
