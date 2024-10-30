@@ -27,5 +27,9 @@ class OrderProduct extends Model
     {
         return $this->belongsTo(User::class, 'user_id'); // Assuming `user_id` is the foreign key in the `product_buy` table
     }
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id'); // Assuming `user_id` is the foreign key in the `product_buy` table
+    }
     use HasFactory;
 }

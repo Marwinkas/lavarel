@@ -18,4 +18,8 @@ class Product extends Model
     ];
     
     use HasFactory;
+    public function orderProduct()
+    {
+                return $this->belongsTo(OrderProduct::class, 'order_product_id'); // Adjust the foreign key if necessary
+            }
 }
