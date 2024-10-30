@@ -13,44 +13,39 @@ class ProfileController extends Controller
 {
     public function Show(): View
     {
-        if(User::where('id', Auth::id())->get()[0]->privilages == "admin"){
-            return view('ProfilePage', [
-                'products' => OrderProduct::get(),
-                'adminprivilages' => User::where('id', Auth::id())->first()
-            ]);
+
+        if (Auth::user()->privilages === "admin") {
+            $products = OrderProduct::all();
+        } else {
+            $products = OrderProduct::where('user_id', Auth::id())->get();
         }
         return view('ProfilePage', [
-            'products' => OrderProduct::where('user_id', Auth::id())->get(),
-            'adminprivilages' => User::where('id', Auth::id())->first(),
-            
+            'products' => $products
         ]);
     }
+
     public function UpdateStatus(Request $request)
     {
-        $post = OrderProduct::findOrFail($request->id);
-        $product = Product::where("id", $post->product_id)->first();
-        if($request->status == "Одобрен" && $post->status != "Доставлен") $post->status = $request->status;
-        else if ($request->status == "Доставлен" && $post->status != "Доставлен") {
-            if ($product && $product->amount -  $post->amount > 0) {
-                $post->status = $request->status;
-                $product->amount -= $post->amount;
-                $product->save();
-                // Optionally save the post here if needed
-            }
+        $statusesOrder = [
+            "Новый" => 0,
+            "Одобрен" => 1,
+            "Доставлен" => 2,
+        ];
 
+        $order = OrderProduct::findOrFail($request->id);
+        $product = $order->product;
+
+        if ($statusesOrder[$request->status] - $statusesOrder[$order->status] === 1){
+            $order->status = $request->status;
+            $order->save();
         }
 
+        if ($order->status == "Доставлен" && $product->amount >= $order->amount) {
+            $order->status = $request->status;
+            $product->amount -= $order->amount;
+            $product->save();
+        }
 
-        else if($request->status == "Доставлен" && $post->amount - Product::where("id", $post->product_id)->amount > 0){$post->status = $request->status;
-        
-        $product = Product::findOrFail($request->id);
-
-
-    }
-
-        $post->save();
-        
         return redirect('/profile')->with('status', '');
-
     }
 }
